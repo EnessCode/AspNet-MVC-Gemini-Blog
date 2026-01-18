@@ -1,0 +1,87 @@
+﻿@model List<BlogProject.ViewModels.CommentViewModel>
+
+@{
+    ViewBag.Title = "Yorum Listesi";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid mt-4">
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h2 class="text-primary mb-0"><i class="fas fa-comments me-2"></i>Yorum Yönetimi</h2>
+            <small class="text-muted">Kullanıcıların blog yazılarına yaptığı yorumları buradan inceleyip silebilirsiniz.</small>
+        </div>
+    </div>
+
+    <div class="card shadow border-0 mb-4">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-light text-secondary">
+                        <tr>
+                            <th class="ps-4" style="width: 5%;">ID</th>
+                            <th style="width: 20%;">KULLANICI</th>
+                            <th style="width: 45%;">YORUM İÇERİĞİ</th>
+                            <th style="width: 15%;">İLGİLİ BLOG</th>
+                            <th class="text-center" style="width: 15%;">İŞLEM</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var comment in Model)
+                        {
+                            <tr>
+                                <td class="ps-4">
+                                    <span class="badge bg-light text-dark border">#@comment.Id</span>
+                                </td>
+
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <img src="https://ui-avatars.com/api/?name=@comment.Username&background=random&color=fff&size=32"
+                                             class="rounded-circle me-2 shadow-sm" alt="Avatar">
+
+                                        <div>
+                                            <div class="fw-bold text-dark">@comment.Username</div>
+                                            <small class="text-muted" style="font-size:11px;">Ziyaretçi</small>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div class="text-secondary text-wrap" style="max-height: 50px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
+                                        <i class="fas fa-quote-left me-1 text-muted opacity-25"></i>
+                                        @comment.Text
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <a href="/Post/Detail/@comment.PostId" target="_blank" class="badge bg-info text-decoration-none text-white p-2">
+                                        <i class="fas fa-external-link-alt me-1"></i> Blog #@comment.PostId
+                                    </a>
+                                </td>
+
+                                <td class="text-center">
+                                    <a href="@Url.Action("CommentDelete", "Admin", new { id = comment.Id })"
+                                       class="btn btn-outline-danger btn-sm shadow-sm"
+                                       onclick="return confirm('Bu yorumu kalıcı olarak silmek istediğinize emin misiniz?');"
+                                       title="Yorumu Sil">
+                                        <i class="fas fa-trash-alt"></i> Sil
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+
+                        @if (Model.Count == 0)
+                        {
+                            <tr>
+                                <td colspan="5" class="text-center py-4 text-muted">
+                                    <i class="fas fa-comment-slash fa-2x mb-2 d-block"></i>
+                                    Henüz hiç yorum yapılmamış.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

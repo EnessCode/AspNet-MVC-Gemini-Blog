@@ -1,0 +1,191 @@
+﻿@model BlogProject.ViewModels.DashboardViewModel
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<div class="container-fluid p-4">
+    <h2 class="mb-4 fw-bold text-secondary">Genel Bakış</h2>
+
+    <div class="row mb-4 g-3">
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 border-start border-4 border-primary h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-muted text-uppercase fw-bold mb-1">Toplam Yazı</h6>
+                            <h2 class="mb-0 text-dark fw-bold">@Model.TotalPosts</h2>
+                        </div>
+                        <div class="bg-primary bg-opacity-10 p-3 rounded-circle text-primary">
+                            <i class="fas fa-newspaper fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 border-start border-4 border-success h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-muted text-uppercase fw-bold mb-1">Yorumlar</h6>
+                            <h2 class="mb-0 text-dark fw-bold">@Model.TotalComments</h2>
+                        </div>
+                        <div class="bg-success bg-opacity-10 p-3 rounded-circle text-success">
+                            <i class="fas fa-comments fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 border-start border-4 border-warning h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-muted text-uppercase fw-bold mb-1">Kullanıcılar</h6>
+                            <h2 class="mb-0 text-dark fw-bold">@Model.TotalUsers</h2>
+                        </div>
+                        <div class="bg-warning bg-opacity-10 p-3 rounded-circle text-warning">
+                            <i class="fas fa-users fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 border-start border-4 border-danger h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-muted text-uppercase fw-bold mb-1">Beğeniler</h6>
+                            <h2 class="mb-0 text-dark fw-bold">@Model.TotalLikes</h2>
+                        </div>
+                        <div class="bg-danger bg-opacity-10 p-3 rounded-circle text-danger">
+                            <i class="fas fa-heart fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-header bg-white py-3">
+                    <h5 class="mb-0 fw-bold text-dark"><i class="fas fa-chart-pie me-2"></i>Kategori Dağılımı</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="categoryChart" style="max-height: 400px;"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-header bg-white py-3 border-bottom">
+                    <h5 class="mb-0 fw-bold text-dark">
+                        <i class="fas fa-comments me-2 text-primary"></i>Son Yorumlar
+                    </h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="list-group list-group-flush">
+
+                        @foreach (var comment in Model.LastComments)
+                        {
+                            <div class="list-group-item p-3 border-bottom-0 border-top">
+                                <div class="d-flex align-items-start">
+                                    <div class="flex-shrink-0 me-3">
+                                        <div class="bg-light rounded-circle d-flex align-items-center justify-content-center text-primary fw-bold"
+                                             style="width: 40px; height: 40px;">
+                                            @(string.IsNullOrEmpty(comment.Username) ? "?" : comment.Username.Substring(0, 1).ToUpper())
+                                        </div>
+                                    </div>
+
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex justify-content-between align-items-center mb-1">
+                                            <h6 class="mb-0 fw-bold text-dark" style="font-size: 0.9rem;">@comment.Username</h6>
+                                            <small class="text-muted" style="font-size: 0.75rem;">
+                                                @comment.CreatedAt.ToString("dd.MM HH:mm")
+                                            </small>
+                                        </div>
+
+                                        <p class="text-muted mb-1 small text-truncate" style="max-width: 200px;">
+                                            "@comment.Text"
+                                        </p>
+
+                                        <small class="text-primary fst-italic" style="font-size: 0.75rem;">
+                                            <i class="fas fa-reply me-1"></i> @comment.PostTitle
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                        @if (Model.LastComments.Count == 0)
+                        {
+                            <div class="text-center p-4 text-muted">
+                                <i class="far fa-comment-dots fa-2x mb-2"></i>
+                                <p class="mb-0">Henüz yorum yok.</p>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+
+                <div class="card-footer bg-white text-center py-2 border-top">
+                    <a href="/Admin/CommentList" class="text-decoration-none small fw-bold">Tüm Yorumları Gör <i class="fas fa-arrow-right ms-1"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var catNames = @Html.Raw(Json.Encode(Model.CategoryNames));
+    var catCounts = @Html.Raw(Json.Encode(Model.CategoryPostCounts));
+
+    var ctx = document.getElementById('categoryChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'polarArea', 
+        data: {
+            labels: catNames,
+            datasets: [{
+                data: catCounts,
+                backgroundColor: [
+                    'rgba(78, 115, 223, 0.7)',
+                    'rgba(28, 200, 138, 0.7)',
+                    'rgba(54, 185, 204, 0.7)',
+                    'rgba(246, 194, 62, 0.7)',
+                    'rgba(231, 74, 59, 0.7)',
+                    'rgba(133, 135, 150, 0.7)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            scales: {
+                r: {
+                    grid: {
+                        color: 'rgba(0, 0, 0, 0.05)' 
+                    },
+                    ticks: {
+                        display: false
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'right',
+                }
+            }
+        }
+    });
+</script>

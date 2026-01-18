@@ -1,0 +1,126 @@
+﻿@model List<BlogProject.Entities.Notification>
+@{
+    ViewBag.Title = "Bildirimlerim";
+    Layout = "~/Views/Shared/_AuthorLayout.cshtml";
+
+    var unreadCount = Model.Count(x => !x.IsRead);
+}
+
+<div class="container-fluid mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="text-success mb-0"><i class="fas fa-bell me-2"></i>Bildirimlerim</h2>
+            <small class="text-muted">Okuyucularınızdan gelen etkileşimleri buradan takip edin.</small>
+        </div>
+
+        @if (unreadCount > 0)
+        {
+            <div class="badge bg-warning text-dark p-2 px-3 rounded-pill shadow-sm animate__animated animate__pulse animate__infinite">
+                <i class="fas fa-envelope-open-text me-1"></i> @unreadCount Okunmamış
+            </div>
+        }
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+
+            @if (Model.Count == 0)
+            {
+                <div class="card shadow-sm border-0 py-5 text-center">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <i class="fas fa-mug-hot fa-4x text-muted opacity-25"></i>
+                        </div>
+                        <h4 class="text-muted">Henüz yeni bir haber yok</h4>
+                        <p class="text-secondary mb-0">Biraz kahve molası verebilir veya yeni bir yazı yazabilirsiniz.</p>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="vstack gap-3">
+                    @foreach (var n in Model)
+                    {
+                        bool isComment = n.Type == "NewComment";
+                        string iconBg = isComment ? "bg-success" : "bg-info";
+                        string iconClass = isComment ? "fa-comment-dots" : "fa-info-circle";
+                        string cardBorder = n.IsRead ? "border-start border-3 border-light" : "border-start border-4 border-success shadow-sm bg-white";
+                        string opacityClass = n.IsRead ? "opacity-75 bg-light" : "";
+                        string textWeight = n.IsRead ? "fw-normal text-muted" : "fw-bold text-dark";
+
+                        <div class="card border-0 @cardBorder @opacityClass notification-card">
+                            <div class="card-body p-3">
+                                <div class="d-flex align-items-center justify-content-between">
+
+                                    <a href="/Author/ReadNotification/@n.Id" class="d-flex align-items-center text-decoration-none flex-grow-1 text-reset">
+
+                                        <div class="flex-shrink-0 me-3">
+                                            <div class="@iconBg text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 45px; height: 45px;">
+                                                <i class="fas @iconClass fa-lg"></i>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <h6 class="mb-1 @textWeight">
+                                                @n.Message
+                                                @if (!n.IsRead)
+                                                {
+                                                    <span class="badge bg-warning text-dark ms-2" style="font-size: 0.6em; vertical-align: middle;">YENİ</span>
+                                                }
+                                            </h6>
+                                            <div class="d-flex align-items-center text-muted small">
+                                                <span class="me-3">
+                                                    <i class="fas fa-user-circle me-1"></i>
+                                                    @(n.User != null ? n.User.Username : "Sistem")
+                                                </span>
+                                                <span>
+                                                    <i class="far fa-clock me-1"></i> @n.CreatedAt.ToString("HH:mm")
+                                                    <span class="text-muted fst-italic ms-1">(@n.CreatedAt.ToString("dd.MM.yyyy"))</span>
+                                                </span>
+                                            </div>
+
+                                            @if (!n.IsRead)
+                                            {
+                                                <small class="text-success mt-1 d-block fst-italic" style="font-size: 11px;">
+                                                    <i class="fas fa-check-double me-1"></i>Okundu işaretlemek için tıkla
+                                                </small>
+                                            }
+                                        </div>
+                                    </a>
+
+                                    <div class="ms-3 ps-3 border-start">
+                                        <a href="/Author/ReadNotification/@n.Id?goDetail=true" target="_blank"
+                                           class="btn btn-outline-success btn-sm rounded-pill px-3 transition-btn"
+                                           data-bs-toggle="tooltip" title="Yorumu gör">
+                                            İncele <i class="fas fa-arrow-right ms-1"></i>
+                                        </a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<style>
+    .notification-card {
+        transition: all 0.2s ease-in-out;
+    }
+
+        .notification-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 .5rem 1rem rgba(0,0,0,.10) !important;
+        }
+
+    .transition-btn:hover {
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+        background-color: #198754; 
+        color: #fff;
+    }
+</style>

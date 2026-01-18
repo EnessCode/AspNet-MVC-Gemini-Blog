@@ -1,0 +1,44 @@
+﻿@model BlogProject.Entities.Post
+
+<div class="card border-0 shadow-sm h-100 text-center p-3" style="border-radius: 15px;">
+
+    <div class="mb-2 text-muted text-uppercase" style="font-size: 0.8rem; letter-spacing: 1px;">
+        Kaydedilenler
+    </div>
+
+    <h3 class="fw-bold text-dark m-0">
+        <span style="font-size: 2rem;">🔖</span>
+    </h3>
+    <small class="text-muted mb-3 d-block">Listene Ekle</small>
+
+    @if (TempData["SaveError"] != null)
+    {
+        <div class="alert alert-danger py-1 px-2 mb-2" style="font-size: 0.8rem;">
+            @TempData["SaveError"]
+        </div>
+    }
+    @if (TempData["SaveSuccess"] != null)
+    {
+        <div class="alert alert-success py-1 px-2 mb-2" style="font-size: 0.8rem;">
+            @TempData["SaveSuccess"]
+        </div>
+    }
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <form method="post" action="/Post/SavePost" class="mt-auto">
+            <input type="hidden" name="postId" value="@Model.Id" />
+            <button class="btn btn-outline-warning text-dark rounded-pill px-4 w-100 fw-bold" style="transition: all 0.3s;">
+                ⭐ Kaydet
+            </button>
+        </form>
+    }
+    else
+    {
+        <div class="mt-auto">
+            <a href="/Login/Index" class="btn btn-light rounded-pill w-100 text-muted" style="font-size: 0.9rem;">
+                Giriş Yap
+            </a>
+        </div>
+    }
+</div>

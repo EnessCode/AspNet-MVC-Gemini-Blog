@@ -1,0 +1,38 @@
+﻿@model BlogProject.Entities.Post
+
+<div class="card border-0 shadow-sm h-100 text-center p-3" style="border-radius: 15px;">
+
+    <div class="mb-2 text-muted text-uppercase" style="font-size: 0.8rem; letter-spacing: 1px;">
+        Beğeniler
+    </div>
+
+    <h3 class="fw-bold text-dark m-0">
+        @Model.Likes.Count()
+    </h3>
+    <small class="text-muted mb-3 d-block">Kişi beğendi</small>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger py-1 px-2 mb-2" style="font-size: 0.8rem;">
+            @TempData["Error"]
+        </div>
+    }
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <form method="post" action="/Post/LikePost" class="mt-auto">
+            <input type="hidden" name="postId" value="@Model.Id" />
+            <button class="btn btn-outline-danger rounded-pill px-4 w-100 fw-bold" style="transition: all 0.3s;">
+                <span style="margin-right:5px;">❤</span> Beğen
+            </button>
+        </form>
+    }
+    else
+    {
+        <div class="mt-auto">
+            <a href="/Login/Index" class="btn btn-light rounded-pill w-100 text-muted" style="font-size: 0.9rem;">
+                Giriş Yap
+            </a>
+        </div>
+    }
+</div>

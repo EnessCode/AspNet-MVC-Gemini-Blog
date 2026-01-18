@@ -1,0 +1,144 @@
+﻿@model BlogProject.Entities.Post
+
+@{
+    ViewBag.Title = "Yeni Yazı Oluştur";
+    Layout = "~/Views/Shared/_AuthorLayout.cshtml";
+}
+
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+
+<div class="container-fluid mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="text-dark mb-0">
+                <i class="fas fa-pen-fancy me-2 text-primary"></i>Yeni Yazı Oluştur
+            </h2>
+            <small class="text-muted">Düşüncelerinizi kelimelere dökün ve dünyayla paylaşın.</small>
+        </div>
+        <a href="/Admin/Index" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-1"></i> Vazgeç
+        </a>
+    </div>
+
+    <form method="post" enctype="multipart/form-data">
+        @Html.AntiForgeryToken()
+
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-body p-4">
+
+                        <div class="mb-4">
+                            @Html.LabelFor(x => x.Title, "Blog Başlığı", new { @class = "form-label fw-bold" })
+                            <div class="input-group">
+                                <span class="input-group-text bg-white text-primary border-end-0"><i class="fas fa-heading"></i></span>
+                                @Html.TextBoxFor(x => x.Title, new { @class = "form-control form-control-lg border-start-0 ps-0", placeholder = "Dikkat çekici bir başlık girin..." })
+                            </div>
+                            @Html.ValidationMessageFor(x => x.Title, "", new { @class = "text-danger small" })
+                        </div>
+
+                        <div class="mb-2">
+                            @Html.LabelFor(x => x.Content, "İçerik", new { @class = "form-label fw-bold" })
+                            @Html.TextAreaFor(x => x.Content, new { @class = "form-control", id = "summernote", rows = 15, placeholder = "Hikayenizi buraya yazın..." })
+                            @Html.ValidationMessageFor(x => x.Content, "", new { @class = "text-danger small" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-body">
+                        <h6 class="fw-bold mb-3 text-secondary">Yayınla</h6>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-paper-plane me-2"></i> Yayına Al
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-body">
+                        <h6 class="fw-bold mb-3 text-secondary">Ayarlar</h6>
+
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Kategori</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="fas fa-folder text-secondary"></i></span>
+                                @Html.DropDownList("CategoryId", ViewBag.Categories as SelectList, "-- Seçiniz --", new { @class = "form-select" })
+                            </div>
+                            @Html.ValidationMessage("CategoryId", "", new { @class = "text-danger small" })
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Etiketler</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="fas fa-tags text-secondary"></i></span>
+                                <input type="text" name="tags" class="form-control" placeholder="Örn: Gezi, Yemek" />
+                            </div>
+                            <small class="text-muted fst-italic" style="font-size: 11px;">Etiketleri virgül ile ayırın.</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-body">
+                        <h6 class="fw-bold mb-3 text-secondary">Kapak Görseli</h6>
+
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Görsel Linki (URL)</label>
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-text bg-light"><i class="fas fa-link"></i></span>
+                                @Html.TextBoxFor(x => x.ImageUrl, new { @class = "form-control", id = "imgUrlInput", placeholder = "https://..." })
+                            </div>
+                        </div>
+
+                        <div class="text-center bg-light border rounded d-flex align-items-center justify-content-center p-2" style="height: 180px; overflow:hidden;">
+                            <img id="imgPreview" src="https://via.placeholder.com/300x180?text=Gorsel+Onizleme" class="img-fluid rounded" style="max-height: 100%;" alt="Önizleme" />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#imgUrlInput').on('input', function () {
+                var url = $(this).val();
+                if (url) {
+                    $('#imgPreview').attr('src', url);
+                } else {
+                    $('#imgPreview').attr('src', 'https://via.placeholder.com/300x180?text=Gorsel+Onizleme');
+                }
+            });
+            $('#imgPreview').on('error', function () {
+                $(this).attr('src', 'https://via.placeholder.com/300x180?text=Resim+Yuklenemedi');
+            });
+
+            $('#summernote').summernote({
+                placeholder: 'Hikayenizi buraya yazın...',
+                tabsize: 2,
+                height: 400,
+                lang: 'tr-TR',
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'underline', 'clear']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'picture', 'video']],
+                    ['view', ['fullscreen', 'codeview', 'help']]
+                ]
+            });
+        });
+    </script>
+}

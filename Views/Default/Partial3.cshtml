@@ -1,0 +1,64 @@
+﻿@using BlogProject.Entities
+@model List<Post>
+
+<div class="card border-0 shadow-sm rounded-3 overflow-hidden">
+
+    <div class="card-header bg-white border-bottom p-3">
+        <h5 class="mb-0 fw-bold text-dark">
+            <i class="fas fa-chart-line me-2 text-primary"></i>Popüler Yazılar
+        </h5>
+    </div>
+
+    <div class="list-group list-group-flush">
+        @{ int i = 0; }
+        @foreach (var post in Model)
+        {
+            i++;
+            string rankColor = "bg-secondary"; // Varsayılan (4-10 arası)
+            if (i == 1) { rankColor = "bg-warning text-dark"; }      // Altın
+            else if (i == 2) { rankColor = "bg-secondary bg-opacity-50 text-dark"; } // Gümüş (benzeri)
+            else if (i == 3) { rankColor = "bg-danger bg-opacity-75 text-white"; }   // Bronz
+
+            <a href="/Post/Detail/@post.Id" class="list-group-item list-group-item-action p-3 border-bottom-0 border-top d-flex align-items-center popular-item">
+
+                <div class="me-3 position-relative">
+                    <img src="@post.ImageUrl" class="rounded-3 shadow-sm" alt="@post.Title"
+                         style="width: 60px; height: 60px; object-fit: cover;">
+
+                    <span class="position-absolute top-0 start-0 translate-middle badge rounded-pill @rankColor shadow-sm"
+                          style="font-size: 0.75rem; border: 2px solid #fff;">
+                        #@i
+                    </span>
+                </div>
+
+                <div>
+                    <h6 class="mb-1 fw-bold text-dark text-truncate-2" style="font-size: 0.95rem; line-height: 1.4;">
+                        @post.Title
+                    </h6>
+                    <small class="text-muted" style="font-size: 0.8rem;">
+                        <i class="far fa-eye me-1"></i> Okunmaya Değer
+                    </small>
+                </div>
+            </a>
+        }
+    </div>
+
+    <div class="card-footer bg-white text-center p-3 border-0">
+        <a href="/Post/Index" class="btn btn-outline-primary btn-sm w-100 rounded-pill fw-bold">
+            Tüm Blogları Keşfet <i class="fas fa-arrow-right ms-1"></i>
+        </a>
+    </div>
+</div>
+
+<style>
+    .text-truncate-2 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .popular-item:hover {
+        background-color: #f8f9fa;
+    }
+</style>

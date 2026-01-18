@@ -1,0 +1,121 @@
+﻿@model BlogProject.ViewModels.PostDetailViewModel
+@{
+    ViewBag.Title = "Detay";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<link href="~/web2/css/style.css" rel='stylesheet' type='text/css' />
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="single-grid">
+                @foreach (var item in Model.Posts)
+                {
+                    <div class="card border-0 shadow-sm mb-4">
+                        <img src="@item.ImageUrl" class="card-img-top" style="max-height: 400px; object-fit: cover;" alt="@item.Title" />
+                        <div class="card-body p-4">
+                            <h2 class="card-title fw-bold mb-3">@item.Title</h2>
+                            <div class="card-text text-secondary lh-lg">
+                                @Html.Raw(item.Content)
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            @{
+                var post = Model.Posts.FirstOrDefault();
+            }
+
+            @if (post != null)
+            {
+                <div class="row mt-4 mb-5 g-3">
+                    <div class="col-md-6">
+                        @Html.Partial("LikePost", post)
+                    </div>
+                    <div class="col-md-6">
+                        @Html.Partial("SavePost", post)
+                    </div>
+                </div>
+
+                <div class="mt-5">
+                    @Html.Action("AddComment", "Post", new { postId = post.Id })
+                </div>
+            }
+
+            <div class="mt-5">
+                <h4 class="mb-4 border-bottom pb-2">Yorumlar (@Model.Comments.Count)</h4>
+
+                @if (Model.Comments.Count > 0)
+                {
+                    <ul class="list-unstyled">
+                        @foreach (var comment in Model.Comments)
+                        {
+                            <li class="d-flex mb-4 p-3 bg-light rounded">
+                                <img src="https://ui-avatars.com/api/?name=@comment.User.Username&background=random" class="rounded-circle me-3" width="50" height="50" alt="User">
+                                <div>
+                                    <h6 class="fw-bold mb-1">@comment.User.Username</h6>
+                                    <p class="mb-0 text-muted">@comment.Text</p>
+                                    <small class="text-secondary" style="font-size: 12px;">@comment.CreatedAt.ToString("dd.MM.yyyy HH:mm")</small>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <p class="text-muted">Henüz yorum yapılmamış. İlk yorumu sen yap!</p>
+                }
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="sticky-top" style="top: 100px;">
+
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white py-3 border-bottom-0">
+                        <h5 class="mb-0 fw-bold"><i class="fas fa-list-ul me-2 text-primary"></i>Kategoriler</h5>
+                    </div>
+                    <div class="list-group list-group-flush rounded-bottom">
+
+                        <a href="/Post/Index?id=1" class="list-group-item list-group-item-action py-3 d-flex align-items-center">
+                            <span class="bg-light text-primary rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                <i class="fas fa-plane"></i>
+                            </span>
+                            <span class="fw-bold text-dark">Seyahat</span>
+                            <i class="fas fa-chevron-right ms-auto text-muted small"></i>
+                        </a>
+
+                        <a href="/Post/Index?id=2" class="list-group-item list-group-item-action py-3 d-flex align-items-center">
+                            <span class="bg-light text-success rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                <i class="fas fa-utensils"></i>
+                            </span>
+                            <span class="fw-bold text-dark">Yemek</span>
+                            <i class="fas fa-chevron-right ms-auto text-muted small"></i>
+                        </a>
+
+                        <a href="/Post/Index?id=3" class="list-group-item list-group-item-action py-3 d-flex align-items-center">
+                            <span class="bg-light text-warning rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                <i class="fas fa-calendar-alt"></i>
+                            </span>
+                            <span class="fw-bold text-dark">Etkinlikler</span>
+                            <i class="fas fa-chevron-right ms-auto text-muted small"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white py-3 border-bottom-0">
+                        <h5 class="mb-0 fw-bold"><i class="fas fa-bolt me-2 text-warning"></i>Son Eklenenler</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        @Html.Action("Partial3", "Default")
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

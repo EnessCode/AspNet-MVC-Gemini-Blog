@@ -1,0 +1,26 @@
+﻿@model BlogProject.Entities.About
+
+@{
+    ViewBag.Title = "Hakkımızda";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<div class="container my-5">
+    <div class="row align-items-center">
+        <div class="col-md-6">
+            <div class="about-img">
+                <img src="@(!string.IsNullOrEmpty(Model.ImageUrl) ? Model.ImageUrl : "https://via.placeholder.com/600x400")"
+                     class="img-fluid rounded shadow-sm" alt="@Model.Title">
+            </div>
+        </div>
+
+        <div class="col-md-6 mt-4 mt-md-0">
+            <h2 class="fw-bold mb-3">@Model.Title</h2>
+
+            <div class="text-muted" style="line-height: 1.8;">
+                @Html.Raw(Model.Content)
+            </div>
+
+        </div>
+    </div>
+</div>

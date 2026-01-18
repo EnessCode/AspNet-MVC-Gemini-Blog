@@ -1,0 +1,78 @@
+﻿@using BlogProject.Entities
+@model List<Post>
+
+<div class="vstack gap-4">
+    @foreach (var post in Model)
+    {
+        <div class="card border-0 shadow-sm overflow-hidden blog-horizontal-card">
+            <div class="row g-0">
+
+                <div class="col-md-4 position-relative">
+                    <img src="@post.ImageUrl" class="img-fluid w-100 h-100" alt="@post.Title"
+                         style="object-fit: cover; min-height: 220px;">
+
+                    @if (post.Category != null)
+                    {
+                        <span class="position-absolute top-0 start-0 m-2 badge bg-white text-dark shadow-sm">
+                            @post.Category.Title
+                        </span>
+                    }
+                </div>
+
+                <div class="col-md-8">
+                    <div class="card-body h-100 d-flex flex-column justify-content-center">
+
+                        <div class="text-muted small mb-2">
+                            <i class="far fa-calendar-alt text-primary me-1"></i>
+                            @post.CreatedAt.ToString("dd MMMM yyyy")
+                        </div>
+
+                        <h4 class="card-title fw-bold mb-2">
+                            <a href="/Post/Detail/@post.Id" class="text-dark text-decoration-none stretched-link title-hover">
+                                @post.Title
+                            </a>
+                        </h4>
+
+                        <p class="card-text text-secondary mb-3">
+                            @if (!string.IsNullOrEmpty(post.Content) && post.Content.Length > 130)
+                            {
+                                @post.Content.Substring(0, 130)<span>...</span>
+                            }
+                            else
+                            {
+                                @post.Content
+                            }
+                        </p>
+
+                        <div class="mt-auto">
+                            <span class="text-primary fw-bold small text-uppercase read-more-btn">
+                                Devamını Oku <i class="fas fa-long-arrow-alt-right ms-1"></i>
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    .blog-horizontal-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .blog-horizontal-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 1rem 3rem rgba(0,0,0,.15) !important;
+        }
+
+            .blog-horizontal-card:hover .title-hover {
+                color: #0d6efd !important;
+            }
+
+            .blog-horizontal-card:hover .read-more-btn i {
+                padding-left: 5px;
+                transition: padding 0.3s;
+            }
+</style>

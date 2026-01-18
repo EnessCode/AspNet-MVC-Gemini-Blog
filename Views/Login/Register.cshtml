@@ -1,0 +1,246 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kayıt Ol | Blog Portalı</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .bg-image {
+            background-image: url('https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=2066&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            position: relative;
+        }
+
+        .bg-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 3rem;
+            color: white;
+        }
+
+        .register-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #fff;
+            padding: 2rem;
+        }
+
+        .form-wrapper {
+            width: 100%;
+            max-width: 450px; 
+        }
+
+        .form-floating > .form-control:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+        }
+
+        .btn-register {
+            padding: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .validation-summary-errors ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container-fluid g-0">
+        <div class="row g-0">
+
+            <div class="col-lg-6 d-none d-lg-block">
+                <div class="bg-image">
+                    <div class="bg-overlay">
+                        <h1 class="display-4 fw-bold mb-3">Yazar Ol.</h1>
+                        <p class="lead">Kelimelerin gücüne inanıyoruz. Kendi topluluğunu oluşturmak ve fikirlerini özgürce paylaşmak için aramıza katıl.</p>
+                        <div class="mt-4">
+                            <small class="opacity-75"><i class="fas fa-pen-nib me-2"></i>Her büyük hikaye bir cümleyle başlar.</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 register-section">
+                <div class="form-wrapper">
+
+                    <div class="text-center mb-4">
+                        <div class="bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3 shadow" style="width: 60px; height: 60px;">
+                            <i class="fas fa-user-plus fa-2x"></i>
+                        </div>
+                        <h2 class="fw-bold text-dark">Hesap Oluştur</h2>
+                        <p class="text-muted">Formu doldurarak kayıt işlemini tamamlayın.</p>
+                    </div>
+
+                    @if (ViewBag.Error != null)
+                    {
+                        <div class="alert alert-danger d-flex align-items-center" role="alert">
+                            <i class="fas fa-exclamation-circle me-2"></i>
+                            <div>@ViewBag.Error</div>
+                        </div>
+                    }
+
+                    @if (!Html.ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-warning border-0 shadow-sm" role="alert">
+                            <div class="d-flex align-items-center mb-2 text-danger fw-bold">
+                                <i class="fas fa-exclamation-triangle me-2"></i> Lütfen aşağıdaki hataları düzeltin:
+                            </div>
+                            <div class="small text-secondary ps-4">
+                                @Html.ValidationSummary(false, "")
+                            </div>
+                        </div>
+                    }
+
+                    @using (Html.BeginForm("Register", "Login", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken() <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="username" name="Username" placeholder="Kullanıcı Adı" required>
+                            <label for="username"><i class="fas fa-user me-2 text-secondary"></i>Kullanıcı Adı</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" id="email" name="Email" placeholder="name@example.com" required>
+                            <label for="email"><i class="fas fa-envelope me-2 text-secondary"></i>E-Posta Adresi</label>
+                        </div>
+
+                        <div class="form-floating mb-3 position-relative">
+                            <input type="password" class="form-control" id="password" name="Password" placeholder="Şifre" required>
+                            <label for="password"><i class="fas fa-lock me-2 text-secondary"></i>Şifre</label>
+                            <button type="button" class="btn btn-link position-absolute top-50 end-0 translate-middle-y text-decoration-none text-secondary me-2" onclick="togglePassword('password', 'icon1')">
+                                <i class="far fa-eye" id="icon1"></i>
+                            </button>
+                        </div>
+
+                        <div class="form-floating mb-3 position-relative">
+                            <input type="password" class="form-control" id="repassword" name="RePassword" placeholder="Şifre Tekrar" required>
+                            <label for="repassword"><i class="fas fa-lock me-2 text-secondary"></i>Şifre Tekrar</label>
+                            <button type="button" class="btn btn-link position-absolute top-50 end-0 translate-middle-y text-decoration-none text-secondary me-2" onclick="togglePassword('repassword', 'icon2')">
+                                <i class="far fa-eye" id="icon2"></i>
+                            </button>
+                        </div>
+
+                        <div class="form-check mb-4">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" required>
+                            <label class="form-check-label text-muted small" for="flexCheckDefault">
+                                <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#termsModal" class="text-success text-decoration-none fw-bold">Kullanım Şartları</a>'nı okudum ve kabul ediyorum.
+                            </label>
+                        </div>
+
+                        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+                        <div class="g-recaptcha mb-3" data-sitekey="6LdJV0QsAAAAAMp5IKkRE1b5JqmxaJ_XseFJlD6Z"></div>
+
+                        <div class="d-grid gap-2 mb-4">
+                            <button type="submit" class="btn btn-success btn-register shadow-sm">
+                                Kaydı Tamamla <i class="fas fa-check ms-2"></i>
+                            </button>
+                        </div>
+
+                        <div class="text-center">
+                            <p class="text-muted mb-0">Zaten hesabınız var mı? <a href="/Login/Index" class="text-success text-decoration-none fw-bold">Giriş Yap</a></p>
+                        </div>
+                    }
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function togglePassword(inputId, iconId) {
+            var input = document.getElementById(inputId);
+            var icon = document.getElementById(iconId);
+
+            if (input.type === "password") {
+                input.type = "text";
+                icon.classList.remove("fa-eye");
+                icon.classList.add("fa-eye-slash");
+            } else {
+                input.type = "password";
+                icon.classList.remove("fa-eye-slash");
+                icon.classList.add("fa-eye");
+            }
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="termsModalLabel">
+                        <i class="fas fa-file-contract me-2 text-primary"></i>Kullanıcı Sözleşmesi ve Gizlilik Politikası
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+                </div>
+                <div class="modal-body text-secondary" style="font-size: 0.9rem; line-height: 1.6;">
+                    <h6 class="fw-bold text-dark">1. Taraflar ve Amaç</h6>
+                    <p>Bu sözleşme, Blog Portalı (bundan böyle "Site" olarak anılacaktır) ile bu siteye üye olan kullanıcı (bundan böyle "Üye" olarak anılacaktır) arasında düzenlenmiştir. Siteye üye olarak, aşağıdaki şartları kabul etmiş sayılırsınız.</p>
+
+                    <h6 class="fw-bold text-dark">2. Üyelik ve Hizmet Kullanımı</h6>
+                    <ul>
+                        <li>Üye, kayıt formunda verdiği bilgilerin doğru ve güncel olduğunu taahhüt eder. Yanlış bilgi verilmesi durumunda oluşacak sorunlardan Üye sorumludur.</li>
+                        <li>Üye, şifresini kimseyle paylaşmamakla yükümlüdür. Şifre güvenliğinden doğan sorumluluk tamamen Üye'ye aittir.</li>
+                        <li>Site yönetimi, herhangi bir gerekçe göstermeksizin üyeliği askıya alma veya sonlandırma hakkını saklı tutar.</li>
+                    </ul>
+
+                    <h6 class="fw-bold text-dark">3. İçerik ve Telif Hakları</h6>
+                    <p>Üye tarafından paylaşılan yazı, yorum ve görsellerin hukuki ve cezai sorumluluğu tamamen Üye'ye aittir. Site, yer sağlayıcı konumundadır.</p>
+                    <ul>
+                        <li>Türkiye Cumhuriyeti yasalarına aykırı, tehditkar, hakaret içeren veya telif haklarını ihlal eden içerik paylaşmak yasaktır.</li>
+                        <li>Üye, paylaştığı içeriklerin Blog Portalı tarafından tanıtım amaçlı kullanılmasına izin vermiş sayılır.</li>
+                    </ul>
+
+                    <h6 class="fw-bold text-dark">4. Gizlilik Politikası</h6>
+                    <p>Üyelerin kişisel verileri (E-posta, IP adresi vb.) yasal zorunluluklar dışında üçüncü şahıslarla paylaşılmayacaktır. Site, çerez (cookie) teknolojisi kullanarak kullanıcı deneyimini iyileştirmeyi hedefler.</p>
+
+                    <h6 class="fw-bold text-dark">5. Değişiklikler</h6>
+                    <p>Blog Portalı, işbu sözleşme maddelerinde dilediği zaman değişiklik yapma hakkını saklı tutar. Değişiklikler sitede yayınlandığı tarihte yürürlüğe girer.</p>
+
+                    <hr>
+                    <p class="text-muted small">Son Güncelleme: @DateTime.Now.ToString("dd MMMM yyyy")</p>
+                </div>
+                <div class="modal-footer bg-light">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Vazgeç</button>
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Okudum, Anladım</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

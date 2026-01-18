@@ -1,0 +1,143 @@
+﻿@using BlogProject.Entities
+@model List<Post>
+@{
+    ViewBag.Title = "Ana Sayfa";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<div class="container-fluid p-0 mb-5">
+    <div id="blogCarousel" class="carousel slide" data-bs-ride="carousel">
+
+        <div class="carousel-indicators">
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <button type="button" data-bs-target="#blogCarousel" data-bs-slide-to="@i" class="@(i==0 ? "active" : "")" aria-current="true"></button>
+            }
+        </div>
+
+        <div class="carousel-inner">
+            @{ int index = 0; }
+            @foreach (var item in Model)
+            {
+                <div class="carousel-item @(index == 0 ? "active" : "")" data-bs-interval="4000">
+                    <div class="overlay" style="background: rgba(0,0,0,0.4); position:absolute; top:0; left:0; width:100%; height:100%;"></div>
+
+                    <img src="@item.ImageUrl" class="d-block w-100" style="height: 500px; object-fit: cover;" alt="@item.Title">
+
+                    <div class="carousel-caption d-none d-md-block">
+                        <span class="badge bg-primary mb-2">Popüler</span>
+                        <h2 class="display-5 fw-bold text-white shadow-sm">@item.Title</h2>
+                        <a href="/Post/Detail/@item.Id" class="btn btn-outline-light rounded-pill px-4 mt-3">Devamını Oku</a>
+                    </div>
+                </div>
+                index++;
+            }
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#blogCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Önceki</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#blogCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Sonraki</span>
+        </button>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="row text-center mb-5 g-4">
+        <div class="col-md-3 col-6">
+            <div class="p-4 border rounded shadow-sm h-100 feature-box bg-white">
+                <div class="icon-circle bg-primary text-white mb-3">
+                    <i class="fas fa-utensils fa-2x"></i>
+                </div>
+                <h5 class="fw-bold">Restoranlar</h5>
+                <p class="text-muted small mb-0">En lezzetli duraklar</p>
+            </div>
+        </div>
+        <div class="col-md-3 col-6">
+            <div class="p-4 border rounded shadow-sm h-100 feature-box bg-white">
+                <div class="icon-circle bg-success text-white mb-3">
+                    <i class="fas fa-plane fa-2x"></i>
+                </div>
+                <h5 class="fw-bold">Uçuşlar</h5>
+                <p class="text-muted small mb-0">Ucuz bilet fırsatları</p>
+            </div>
+        </div>
+        <div class="col-md-3 col-6">
+            <div class="p-4 border rounded shadow-sm h-100 feature-box bg-white">
+                <div class="icon-circle bg-warning text-white mb-3">
+                    <i class="fas fa-camera fa-2x"></i>
+                </div>
+                <h5 class="fw-bold">Gezilecek Yerler</h5>
+                <p class="text-muted small mb-0">Turistik rotalar</p>
+            </div>
+        </div>
+        <div class="col-md-3 col-6">
+            <div class="p-4 border rounded shadow-sm h-100 feature-box bg-white">
+                <div class="icon-circle bg-info text-white mb-3">
+                    <i class="fas fa-car fa-2x"></i>
+                </div>
+                <h5 class="fw-bold">Araç Kiralama</h5>
+                <p class="text-muted small mb-0">Güvenli yolculuk</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center mb-5">
+        <div class="col-lg-10 text-center">
+            <h1 class="fw-bold mb-3" style="font-family: 'Merriweather', serif;">Keşfetmeye Hazır Mısın?</h1>
+            <div class="divider bg-primary mx-auto mb-4" style="width: 60px; height: 3px;"></div>
+            <p class="lead text-secondary lh-lg">
+                Bu blog, seyahat etmeyi ve yeni yerler keşfetmeyi seven editörlerimizin ortak platformudur.
+                Farklı bakış açılarına sahip içeriklerimizle, hem Türkiye’den hem de dünyadan gezi notlarını sizlerle paylaşıyoruz.
+                Amacımız, yeni rotalar çizmek isteyenlere ilham olmak. İyi okumalar!
+            </p>
+        </div>
+    </div>
+
+    <div class="mb-5">
+        <h3 class="fw-bold border-start border-4 border-primary ps-3 mb-4">Öne Çıkanlar</h3>
+        @Html.Action("Partial1", "Default")
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <h3 class="fw-bold border-start border-4 border-warning ps-3 mb-4">Son Eklenenler</h3>
+            @Html.Action("Partial3", "Default")
+        </div>
+        <div class="col-lg-4">
+            <h3 class="fw-bold border-start border-4 border-success ps-3 mb-4">En Çok Okunanlar</h3>
+            <div class="sticky-top" style="top: 100px; z-index:1;">
+                @Html.Action("Partial4", "Default")
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<style>
+    .icon-circle {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+    }
+
+    .feature-box {
+        transition: transform 0.3s ease;
+    }
+
+        .feature-box:hover {
+            transform: translateY(-5px);
+        }
+
+    .carousel-caption {
+        bottom: 20%;
+    }
+</style>

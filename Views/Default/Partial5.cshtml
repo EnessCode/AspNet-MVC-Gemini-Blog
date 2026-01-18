@@ -1,0 +1,67 @@
+﻿@using BlogProject.Entities
+@model List<Post>
+
+<div class="mt-4">
+    <h4 class="fw-bold mb-4 text-dark border-bottom pb-2">
+        <i class="fas fa-feather-alt me-2 text-primary"></i>Editörün Kaleminden
+    </h4>
+
+    <div class="d-flex flex-column gap-3">
+        @foreach (var post in Model)
+        {
+            <a href="/Post/Detail/@post.Id" class="text-decoration-none">
+                <div class="card border-0 shadow-sm hover-scale overflow-hidden">
+                    <div class="row g-0">
+
+                        <div class="col-4">
+                            <img src="@post.ImageUrl" class="img-fluid h-100 w-100" alt="@post.Title"
+                                 style="object-fit: cover; min-height: 90px;">
+                        </div>
+
+                        <div class="col-8">
+                            <div class="card-body p-2 d-flex align-items-center h-100">
+                                <p class="card-text text-secondary small mb-0 lh-sm">
+                                    @if ((post.Content?.Length ?? 0) > 65)
+                                    {
+                                        @post.Content.Substring(0, 65)<span>...</span>
+                                    }
+                                    else
+                                    {
+                                        @post.Content
+                                    }
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        }
+    </div>
+
+    <div class="card border-0 bg-light mt-5 text-center p-4 rounded-3 shadow-sm position-relative overflow-hidden">
+        <i class="fas fa-envelope-open-text position-absolute text-secondary opacity-10" style="font-size: 8rem; top: -20px; right: -20px;"></i>
+
+        <div class="position-relative">
+            <h6 class="fw-bold text-dark">Haber Bültenine Katıl</h6>
+            <p class="text-muted small mb-3">En yeni seyahat rotalarından ve ipuçlarından ilk sen haberdar ol.</p>
+
+            <div class="input-group input-group-sm">
+                <input type="email" class="form-control border-white" placeholder="E-posta adresin...">
+                <button class="btn btn-primary" type="button"><i class="fas fa-paper-plane"></i></button>
+            </div>
+            <small class="text-muted mt-2 d-block" style="font-size: 10px;">* Spam yok, sadece seyahat!</small>
+        </div>
+    </div>
+</div>
+
+<style>
+    .hover-scale {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+        .hover-scale:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.1) !important;
+            z-index: 10; 
+        }
+</style>
