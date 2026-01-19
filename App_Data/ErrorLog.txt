@@ -230,3 +230,62 @@ Detay:    konum: System.Web.Mvc.Controller.HandleUnknownAction(String actionName
    konum: System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
    konum: System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
 Kullanıcı: enes
+-------------------
+Tarih: 19.01.2026 21:45:20
+Hata: A public action method 'ındexssa' was not found on controller 'BlogProject.Controllers.LoginController'.
+Detay:    konum: System.Web.Mvc.Controller.HandleUnknownAction(String actionName)
+   konum: System.Web.Mvc.Controller.<>c.<BeginExecuteCore>b__152_1(IAsyncResult asyncResult, ExecuteCoreState innerState)
+   konum: System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)
+   konum: System.Web.Mvc.Controller.EndExecuteCore(IAsyncResult asyncResult)
+   konum: System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)
+   konum: System.Web.Mvc.Controller.EndExecute(IAsyncResult asyncResult)
+   konum: System.Web.Mvc.MvcHandler.<>c.<BeginProcessRequest>b__20_1(IAsyncResult asyncResult, ProcessRequestState innerState)
+   konum: System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)
+   konum: System.Web.Mvc.MvcHandler.EndProcessRequest(IAsyncResult asyncResult)
+   konum: System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   konum: System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   konum: System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+Kullanıcı: 
+-------------------
+Tarih: 19.01.2026 21:48:08
+Hata: Bu bir test hatasıdır!
+Detay:    konum: BlogProject.Controllers.DefaultController.HataTest() C:\Users\Enes\source\repos\BlogProject\BlogProject\Controllers\DefaultController.cs içinde: satır 14
+   konum: lambda_method(Closure , ControllerBase , Object[] )
+   konum: System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   konum: System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c.<BeginInvokeSynchronousActionMethod>b__9_0(IAsyncResult asyncResult, ActionInvocation innerInvokeState)
+   konum: System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`2.CallEndDelegate(IAsyncResult asyncResult)
+   konum: System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeActionMethod(IAsyncResult asyncResult)
+   konum: System.Web.Mvc.Async.AsyncControllerActionInvoker.AsyncInvocationWithFilters.<>c__DisplayClass11_0.<InvokeActionMethodFilterAsynchronouslyRecursive>b__0()
+   konum: System.Web.Mvc.Async.AsyncControllerActionInvoker.AsyncInvocationWithFilters.<>c__DisplayClass11_2.<InvokeActionMethodFilterAsynchronouslyRecursive>b__2()
+   konum: System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeActionMethodWithFilters(IAsyncResult asyncResult)
+   konum: System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass3_6.<BeginInvokeAction>b__4()
+   konum: System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass3_1.<BeginInvokeAction>b__1(IAsyncResult asyncResult)
+   konum: System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeAction(IAsyncResult asyncResult)
+   konum: System.Web.Mvc.Controller.<>c.<BeginExecuteCore>b__152_1(IAsyncResult asyncResult, ExecuteCoreState innerState)
+   konum: System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)
+   konum: System.Web.Mvc.Controller.EndExecuteCore(IAsyncResult asyncResult)
+   konum: System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)
+   konum: System.Web.Mvc.Controller.EndExecute(IAsyncResult asyncResult)
+   konum: System.Web.Mvc.MvcHandler.<>c.<BeginProcessRequest>b__20_1(IAsyncResult asyncResult, ProcessRequestState innerState)
+   konum: System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)
+   konum: System.Web.Mvc.MvcHandler.EndProcessRequest(IAsyncResult asyncResult)
+   konum: System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   konum: System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   konum: System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+Kullanıcı: ali
+-------------------
+Tarih: 19.01.2026 21:57:12
+Hata: A public action method 'Dashboard' was not found on controller 'BlogProject.Controllers.AdminController'.
+Detay:    konum: System.Web.Mvc.Controller.HandleUnknownAction(String actionName)
+   konum: System.Web.Mvc.Controller.<>c.<BeginExecuteCore>b__152_1(IAsyncResult asyncResult, ExecuteCoreState innerState)
+   konum: System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)
+   konum: System.Web.Mvc.Controller.EndExecuteCore(IAsyncResult asyncResult)
+   konum: System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)
+   konum: System.Web.Mvc.Controller.EndExecute(IAsyncResult asyncResult)
+   konum: System.Web.Mvc.MvcHandler.<>c.<BeginProcessRequest>b__20_1(IAsyncResult asyncResult, ProcessRequestState innerState)
+   konum: System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)
+   konum: System.Web.Mvc.MvcHandler.EndProcessRequest(IAsyncResult asyncResult)
+   konum: System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   konum: System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   konum: System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+Kullanıcı: enes

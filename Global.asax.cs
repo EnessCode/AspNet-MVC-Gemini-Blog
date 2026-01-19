@@ -31,19 +31,37 @@ namespace BlogProject
 				}
 			}
 		}
+		protected void Application_EndRequest()
+		{
+			if (Request.IsAuthenticated && Response.StatusCode == 302)
+			{
+				if (Response.RedirectLocation != null && Response.RedirectLocation.Contains("Login"))
+				{
+					Response.Clear();
+					Response.StatusCode = 403;
+					Response.Redirect("/Error/Page403");
+					Response.End();
+				}
+			}
+		}
 
 		protected void Application_Error()
 		{
 			Exception ex = Server.GetLastError();
 
-			string logPath = Server.MapPath("~/App_Data/ErrorLog.txt");
-			string content = $"-------------------\n" +
-							 $"Tarih: {DateTime.Now}\n" +
-							 $"Hata: {ex.Message}\n" +
-							 $"Detay: {ex.StackTrace}\n" +
-							 $"Kullanıcı: {User.Identity.Name}\n";
+			if (ex != null)
+			{
+				string logPath = Server.MapPath("~/App_Data/ErrorLog.txt");
+				string userName = User != null && User.Identity.IsAuthenticated ? User.Identity.Name : "Misafir";
 
-			System.IO.File.AppendAllText(logPath, content);
+				string content = $"-------------------\n" +
+								 $"Tarih: {DateTime.Now}\n" +
+								 $"Hata: {ex.Message}\n" +
+								 $"Detay: {ex.StackTrace}\n" +
+								 $"Kullanıcı: {userName}\n";
+
+				System.IO.File.AppendAllText(logPath, content);
+			}
 		}
 	}
 }

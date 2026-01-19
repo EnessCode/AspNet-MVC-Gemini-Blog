@@ -12,24 +12,34 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
         body {
-            background: #fdfdfe;
+            background: #f8f9fa; 
             display: flex;
             align-items: center;
             justify-content: center;
             height: 100vh;
             font-family: 'Segoe UI', sans-serif;
+            margin: 0;
         }
 
         .error-card {
             text-align: center;
             max-width: 500px;
-            padding: 40px;
+            padding: 45px;
+            background: white;
+            border-radius: 20px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05); 
+            transition: transform 0.3s ease;
         }
+
+            .error-card:hover {
+                transform: translateY(-5px); 
+            }
 
         .icon-box {
             font-size: 80px;
-            color: #fd7e14;
+            color: #fd7e14; 
             margin-bottom: 20px;
+            animation: shake 3s infinite;
         }
 
         .error-code {
@@ -52,6 +62,30 @@
             margin-top: 15px;
             margin-bottom: 30px;
             font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .btn {
+            transition: all 0.2s;
+        }
+
+            .btn:hover {
+                transform: scale(1.05);
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            }
+
+        @@keyframes shake {
+            0%, 100% {
+                transform: rotate(0deg);
+            }
+
+            10%, 30%, 50%, 70%, 90% {
+                transform: rotate(-5deg);
+            }
+
+            20%, 40%, 60%, 80% {
+                transform: rotate(5deg);
+            }
         }
     </style>
 </head>
@@ -64,7 +98,7 @@
         <h1 class="error-title">Erişim İzniniz Yok</h1>
         <p class="error-desc">
             Üzgünüz, bu sayfayı görüntülemek için yeterli yetkiye sahip değilsiniz. <br />
-            Bir yazar hesabıyla Admin paneline girmeye çalışıyor olabilirsiniz.
+            Bir <strong>Yazar</strong> hesabıyla <strong>Admin</strong> paneline girmeye çalışıyor olabilirsiniz.
         </p>
         <div class="d-flex justify-content-center gap-3">
             <a href="/Login/LogOut" class="btn btn-outline-danger rounded-pill px-4">
