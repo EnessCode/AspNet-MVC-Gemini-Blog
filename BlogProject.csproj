@@ -183,6 +183,10 @@
     <Compile Include="Migrations\202601181029260_AddCreatedAtColumn.Designer.cs">
       <DependentUpon>202601181029260_AddCreatedAtColumn.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202601191829254_AddAdminPickColumn.cs" />
+    <Compile Include="Migrations\202601191829254_AddAdminPickColumn.Designer.cs">
+      <DependentUpon>202601191829254_AddAdminPickColumn.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\AddCommentViewModel.cs" />
@@ -548,6 +552,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202601181029260_AddCreatedAtColumn.resx">
       <DependentUpon>202601181029260_AddCreatedAtColumn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202601191829254_AddAdminPickColumn.resx">
+      <DependentUpon>202601191829254_AddAdminPickColumn.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -293,6 +293,16 @@ namespace BlogProject.Controllers
 			}
 			return RedirectToAction("UserList");
 		}
+		public ActionResult ToggleEditorPick(int id)
+		{
+			var post = db.Posts.Find(id);
+			if (post != null)
+			{
+				post.IsEditorPick = !post.IsEditorPick;
+				db.SaveChanges();
+			}
+			return RedirectToAction("PostList");
+		}
 
 		[HttpGet]
 		public ActionResult AboutUpdate()

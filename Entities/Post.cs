@@ -20,6 +20,7 @@ namespace BlogProject.Entities
 		public virtual User User { get; set; }
 		public int CategoryId { get; set; }
 		public virtual Category Category { get; set; }
+		public bool IsEditorPick { get; set; } = false; 
 
 		public virtual ICollection<PostTag> PostTags { get; set; }
 		public virtual ICollection<Comment> Comments { get; set; }

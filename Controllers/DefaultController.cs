@@ -51,21 +51,24 @@ namespace BlogProject.Controllers
 		// Partial4: İlk 3 post (örnek kategori veya içerik için)
 		public PartialViewResult Partial4()
 		{
-			var firstPosts = db.Posts
-							  .OrderBy(p => p.CreatedAt)
-							  .Take(3)
-							  .ToList();
-			return PartialView("Partial4", firstPosts);
-		}
-
-		// Partial5: Popüler 3 post (beğeni sayısına göre)
-		public PartialViewResult Partial5()
-		{
 			var popularPosts = db.Posts
 								.OrderByDescending(p => p.Likes.Count)
 								.Take(3)
 								.ToList();
-			return PartialView("Partial5", popularPosts);
+
+			return PartialView("Partial4", popularPosts);
+		}
+
+		// Partial5: "Editörün Kaleminden" (Admin tarafından seçilen 3 yazı)
+		public PartialViewResult Partial5()
+		{
+			var editorPicks = db.Posts
+								.Where(p => p.IsEditorPick == true)
+								.OrderByDescending(p => p.CreatedAt)
+								.Take(3)
+								.ToList();
+
+			return PartialView("Partial5", editorPicks);
 		}
 
 		public ActionResult About()

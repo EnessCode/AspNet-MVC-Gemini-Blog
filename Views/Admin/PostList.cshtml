@@ -2,7 +2,7 @@
 @model List<Post>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Blog Listesi";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -26,8 +26,9 @@
                     <thead class="bg-light text-secondary">
                         <tr>
                             <th class="ps-4" style="width: 5%;">ID</th>
-                            <th style="width: 55%;">BAŞLIK</th>
-                            <th class="text-center" style="width: 40%;">İŞLEMLER</th>
+                            <th style="width: 45%;">BAŞLIK</th>
+                            <th class="text-center" style="width: 15%;">EDİTÖR SEÇİMİ</th>
+                            <th class="text-center" style="width: 35%;">İŞLEMLER</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -43,8 +44,22 @@
                                 </td>
 
                                 <td class="text-center">
+                                    @if (x.IsEditorPick)
+                                    {
+                                        <a href="/Admin/ToggleEditorPick/@x.Id" class="btn btn-warning btn-sm shadow-sm text-dark fw-bold" title="Seçimi Kaldır">
+                                            <i class="fas fa-star"></i> Seçildi
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a href="/Admin/ToggleEditorPick/@x.Id" class="btn btn-outline-secondary btn-sm shadow-sm" title="Editörün Seçimi Yap">
+                                            <i class="far fa-star"></i> Seç
+                                        </a>
+                                    }
+                                </td>
+                                <td class="text-center">
                                     <div class="btn-group" role="group">
-                                        <a href="/Post/Detail/@x.Id" class="btn btn-outline-info btn-sm" title="Sitede Gör">
+                                        <a href="/Post/Detail/@x.Id" class="btn btn-outline-info btn-sm" title="Sitede Gör" target="_blank">
                                             <i class="fas fa-eye"></i> <span class="d-none d-md-inline">Detay</span>
                                         </a>
 
@@ -67,39 +82,33 @@
 </div>
 
 <style>
-        .table th {
-                font-size: 0.85rem;
-                font-weight: 600;
-                letter-spacing: 0.5px;
-                text-transform: uppercase;
-                border-top: none;
-
+    .table th {
+        font-size: 0.85rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        border-top: none;
     }
 
-        .table td {
-                vertical-align: middle;
-                font-size: 0.95rem;
-
+    .table td {
+        vertical-align: middle;
+        font-size: 0.95rem;
     }
 
-        .btn-group .btn {
-                margin: 0 2px;
-                border-radius: 0.25rem !important;
-
+    .btn-group .btn {
+        margin: 0 2px;
+        border-radius: 0.25rem !important;
     }
 
-        .shadow-sm {
-                box-shadow: 0 .125rem .25rem rgba(0,0,0,.075) !important;
-
+    .shadow-sm {
+        box-shadow: 0 .125rem .25rem rgba(0,0,0,.075) !important;
     }
 
-        .shadow {
-                box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
-
+    .shadow {
+        box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
     }
 
-        .border-0 {
-                border: 0 !important;
-
+    .border-0 {
+        border: 0 !important;
     }
 </style>
